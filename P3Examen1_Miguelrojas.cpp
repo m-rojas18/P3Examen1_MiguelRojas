@@ -54,7 +54,7 @@ int main(){
                 imprimirPCs(lista_PCs);
                 cout << "Seleccione una PC: ";
                 cin >> opcion_pc;
-                cout << endl
+                cout << endl;
                 while(opcion_pc > lista_PCs.size() || opcion_pc < 0){
                     cout << "Ingrese una opcion invalida\n";
                     imprimirPCs(lista_PCs);
@@ -81,7 +81,7 @@ int main(){
                     } else if(comando.substr(0,5) == "ping_"){
                         //Opcion Ping
                         string direccion_ip_buscada = comando.substr(5);
-                        cout << direccion_ip_buscada << endl;
+                        pc_seleccionada->ping(direccion_ip_buscada);
                     }else if(comando == "exit"){
                         //El usuario puso el comando exit
                         seguir_terminal = false;  
