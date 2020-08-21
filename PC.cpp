@@ -53,13 +53,37 @@ void PC::ping(string ip_buscado){
         numeros_direccionIP_buscada[i] = entero_temporal;
     }
 
+
     //Convertir direccion ip de usuario a binario
-
+    vector<string> binario_ip_usuario;
+    for (int i = 0; i < 4; i++){
+        int valor_temporal = numeros_direccionIP_usuario[i];
+        cout << "Valores [" << i << "]" << valor_temporal << endl;
+        string valor_binario = conversionBinario(valor_temporal);
+        cout << "[" << i << "]"<< valor_binario << endl;
+        binario_ip_usuario.push_back(valor_binario);
+    }
     
+}
 
+string PC::conversionBinario(int numero){
+    int arreglo_binario[100];
+    int contador = 0;
+    string binario;
+    while(numero > 0){
+        arreglo_binario[contador] = numero % 2;
+        numero = numero /2;
+        contador++;
+    }
 
-
-
+    for (int i = contador - 1; i >=0 ; i--){
+        binario += std::to_string(arreglo_binario[i]);
+    }
+    int contador_ceros = -7;
+    string cero = "0";
+    
+    return binario;
+    
 }
 //Destructor
 PC::~PC(){}

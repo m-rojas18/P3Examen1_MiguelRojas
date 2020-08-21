@@ -17,6 +17,7 @@ class PC{
         string getMascara_Red();
         string getHost_Name();
         void ping(string);
+        string conversionBinario(int);
         ~PC();
 
 };

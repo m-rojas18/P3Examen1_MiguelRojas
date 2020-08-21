@@ -9,6 +9,8 @@ void imprimirPCs(vector<PC*>);
 int main(){
     //Crear vector
     vector<PC*> lista_PCs;
+    PC* pc_definida = new PC("192.168.3.58", "255.255.255.192", "Miguel");
+    lista_PCs.push_back(pc_definida);
     char seguir = 's';
     int opcion_usuario;
     while(seguir == 's'){
