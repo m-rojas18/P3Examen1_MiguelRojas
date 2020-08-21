@@ -5,7 +5,7 @@ using namespace std;
 
 
 void imprimirPCs(vector<PC*>);
-void ping();
+
 int main(){
     //Crear vector
     vector<PC*> lista_PCs;
@@ -54,6 +54,7 @@ int main(){
                 imprimirPCs(lista_PCs);
                 cout << "Seleccione una PC: ";
                 cin >> opcion_pc;
+                cout << endl
                 while(opcion_pc > lista_PCs.size() || opcion_pc < 0){
                     cout << "Ingrese una opcion invalida\n";
                     imprimirPCs(lista_PCs);
@@ -61,7 +62,6 @@ int main(){
                     cin >> opcion_pc;
                     cout << endl;
                 }
-                cout << endl;
                 //Conseguir PC elegida
                 PC* pc_seleccionada = lista_PCs.at(opcion_pc);
                 //Comandos y Funciones del Programa
@@ -69,7 +69,6 @@ int main(){
                 bool seguir_terminal = true;
                 //Opciones de Comandos
                 while(seguir_terminal == true){
-                    
                     cout << pc_seleccionada->getHost_Name() << "#";
                     cin >> comando;
                     //conseguir substring para verificar el comando
@@ -81,14 +80,15 @@ int main(){
                             <<  "      Netmask: " << pc_seleccionada->getMascara_Red() << endl;
                     } else if(comando.substr(0,5) == "ping_"){
                         //Opcion Ping
+                        string direccion_ip_buscada = comando.substr(5);
+                        cout << direccion_ip_buscada << endl;
                     }else if(comando == "exit"){
                         //El usuario puso el comando exit
                         seguir_terminal = false;  
                         cout << "Termino la sesion\n";
                         break;
-                    } else {
+                    } else 
                         cout << "      Ingreso un comando invalido.\n";
-                    }
 
                     comando = "";
                     validar_comando_ping = "";
@@ -107,10 +107,8 @@ int main(){
             break;
         }
     }
-
     return 0;
 }
-
 
 void imprimirPCs(vector<PC*> lista_PCs){
 

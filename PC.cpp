@@ -13,4 +13,9 @@ string PC::getDireccion_IP(){return direccion_IP;}
 string PC::getHost_Name(){return host_name;}
 string PC::getMascara_Red(){return mascara_red;}
 
+
+//Metodo Ping
+void PC::ping(string ip_buscado){
+
+}
 PC::~PC(){}

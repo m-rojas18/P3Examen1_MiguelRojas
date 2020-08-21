@@ -16,6 +16,7 @@ class PC{
         string getDireccion_IP();
         string getMascara_Red();
         string getHost_Name();
+        void ping(string);
         ~PC();
 
 };
