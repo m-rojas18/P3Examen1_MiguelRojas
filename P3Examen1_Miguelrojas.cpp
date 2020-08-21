@@ -5,6 +5,7 @@ using namespace std;
 
 
 void imprimirPCs(vector<PC*>);
+void ping();
 int main(){
     //Crear vector
     vector<PC*> lista_PCs;
@@ -31,7 +32,7 @@ int main(){
             cout << "Ingrese la mascara de red de la PC: ";
             cin >> mascara_red;
             cout << endl;
-            cout << "Ingrese el nombre del host de la PC:";
+            cout << "Ingrese el nombre del host de la PC: ";
             cin >> host_name;
             cout << endl;
             //Crear Objeto
@@ -43,17 +44,55 @@ int main(){
         }
         case 2:{
             //Opcion Ingresar a PC
-            //Verificar si existen Pcs
+            //Verificar si existen PCs
             if(lista_PCs.empty()){
                 cout << "No existe ninguna PC\n";
             } else {
                 //Existe minimo 1 PC
+                //Dejar al usuario elegir una PC
                 int opcion_pc;
-                cout << "Lista de PCs: " << endl;
                 imprimirPCs(lista_PCs);
                 cout << "Seleccione una PC: ";
                 cin >> opcion_pc;
+                while(opcion_pc > lista_PCs.size() || opcion_pc < 0){
+                    cout << "Ingrese una opcion invalida\n";
+                    imprimirPCs(lista_PCs);
+                    cout << "Seleccione una PC: ";
+                    cin >> opcion_pc;
+                    cout << endl;
+                }
+                cout << endl;
+                //Conseguir PC elegida
+                PC* pc_seleccionada = lista_PCs.at(opcion_pc);
+                //Comandos y Funciones del Programa
+                string comando = "";
+                bool seguir_terminal = true;
+                //Opciones de Comandos
+                while(seguir_terminal == true){
+                    
+                    cout << pc_seleccionada->getHost_Name() << "#";
+                    cin >> comando;
+                    //conseguir substring para verificar el comando
+                    string validar_comando_ping = comando.substr(0, 4);
 
+                    if(comando == "show"){
+                        //Opcion show
+                        cout << "      IP: " << pc_seleccionada->getDireccion_IP() << endl
+                            <<  "      Netmask: " << pc_seleccionada->getMascara_Red() << endl;
+                    } else if(comando.substr(0,5) == "ping_"){
+                        //Opcion Ping
+                    }else if(comando == "exit"){
+                        //El usuario puso el comando exit
+                        seguir_terminal = false;  
+                        cout << "Termino la sesion\n";
+                        break;
+                    } else {
+                        cout << "      Ingreso un comando invalido.\n";
+                    }
+
+                    comando = "";
+                    validar_comando_ping = "";
+                } 
             }
             break;
         }
@@ -75,7 +114,7 @@ int main(){
 
 void imprimirPCs(vector<PC*> lista_PCs){
 
-
+    cout << "Lista de PCs: " << endl;
     for (int i = 0; i < lista_PCs.size(); i++){
         PC* pc_temporal = lista_PCs.at(i);
         cout << "PC [" << i << "] " << "Host Name: " << pc_temporal->getHost_Name() << ", Direccion IP: " << pc_temporal->getDireccion_IP() 
