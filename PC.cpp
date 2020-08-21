@@ -15,55 +15,90 @@ string PC::getHost_Name(){return host_name;}
 string PC::getMascara_Red(){return mascara_red;}
 
 
-//Metodo Ping
 void PC::ping(string ip_buscado){
     //Conseguir valores de ip de pc ingresada
-    string delimitador = ".";
-    string cadena_temporal = direccion_IP;
-    int posicion = 0;
-    vector<string> valores_direccion_ip;
-    //Recorrer cadena y agregar numeros a lista de string
-    while((posicion = cadena_temporal.find(delimitador))!= string::npos){
-        valores_direccion_ip.push_back(cadena_temporal.substr(0, posicion));
-        cadena_temporal.erase(0, posicion + delimitador.length());
-    }
-    valores_direccion_ip.push_back(cadena_temporal);
-
-    //Convertir valores de string obtenidos a int
+    vector<string> valores_direccion_ip = separarNumeros(direccion_IP);
+    //Convertir valores de string obtenidos a int de direccion ip de usuario
     int numeros_direccionIP_usuario[4];
     for (int i = 0; i < 4; i++){
         int entero_temporal = std::stoi(valores_direccion_ip[i]);
         numeros_direccionIP_usuario[i] = entero_temporal;
     }
-
     //Repetir proceso con la direccion ip buscada
-    string cadena_buscada_temporal = ip_buscado;
-    int posicion_2 = 0;
-    vector<string> valores_direccion_buscada;
-    
-    while((posicion_2 = cadena_buscada_temporal.find(delimitador))!= string::npos){
-        valores_direccion_buscada.push_back(cadena_buscada_temporal.substr(0, posicion_2));
-        cadena_buscada_temporal.erase(0, posicion_2 + delimitador.length());
-    }
-    valores_direccion_buscada.push_back(cadena_temporal);
+    vector<string> valores_direccion_buscada =separarNumeros(ip_buscado);//Separar numeros
+    //Convertir valores de string obtenidos a int de direccion de ip buscada
     int numeros_direccionIP_buscada[4];
-    //Convertir valores de string obtenidos a int
     for (int i = 0; i < 4; i++){
         int entero_temporal = std::stoi(valores_direccion_buscada[i]);
         numeros_direccionIP_buscada[i] = entero_temporal;
     }
 
-
     //Convertir direccion ip de usuario a binario
-    vector<string> binario_ip_usuario;
+    vector<string> binario_IP_usuario;
     for (int i = 0; i < 4; i++){
-        int valor_temporal = numeros_direccionIP_usuario[i];
-        cout << "Valores [" << i << "]" << valor_temporal << endl;
-        string valor_binario = conversionBinario(valor_temporal);
-        cout << "[" << i << "]"<< valor_binario << endl;
-        binario_ip_usuario.push_back(valor_binario);
+        string valor_binario = conversionBinario(numeros_direccionIP_usuario[i]);
+        binario_IP_usuario.push_back(valor_binario);
     }
+
+    //Convertir direccion ip buscada a binario
+    vector<string> binarios_IP_buscado;
+    for (int i = 0; i < 4; i++){
+        string valor_binario = conversionBinario(numeros_direccionIP_buscada[i]);
+        binarios_IP_buscado.push_back(valor_binario);
+    }
+
+
+    //Separar numeros de mascara de red
+    vector<string> valores_mascara_red = separarNumeros(mascara_red);
+    //Convertir valores de string a int
+    int numeros_mascara_red[4];
+    for(int i = 0; i < 4; i++){
+        int numero_temporal = std::stoi(valores_mascara_red[i]);
+         numeros_mascara_red[i] = numero_temporal;
+    }
+
+    //Convertir mascara de red a binario
+    vector<string> binario_mascara_red;
+    for (int i = 0; i < 4; i++){
+        string valor_binario = conversionBinario(numeros_mascara_red[i]);
+        binario_mascara_red.push_back(valor_binario);
+    }
+
+    //Encontrar cantidad de 1's en la mascara de red
+    //Hacer una sola string de los binarios
+    string binario_mascara = unirBinarios(binario_mascara_red);
     
+    int cantidad_uno = 0;
+    for(int i =0; i < binario_mascara.length(); i++){
+        char caracter_temporal = binario_mascara[i];
+        if(caracter_temporal == '1'){
+            cantidad_uno++;
+        }
+    }
+    //Conseguir cadena de ip de usuario con respecto a la cantidad de 1's
+    string salida_binario_IPuser = unirBinarios(binario_IP_usuario);
+    string ip_comparacion_user = salida_binario_IPuser.substr(0, cantidad_uno);
+
+    //Conseguir cadena de ip buscado con respecto a la cantidad de 1's
+    string salida_binario_IP_buscado = unirBinarios(binarios_IP_buscado);
+    cout << salida_binario_IP_buscado << endl;
+    string ip_comparacion_buscado = salida_binario_IP_buscado.substr(0, cantidad_uno);
+    cout<< ip_comparacion_buscado << endl;
+
+}
+
+vector<string> PC::separarNumeros(string direccion){
+    vector<string> vector_temporal;
+    string delimitador = ".";
+    string cadena_temporal = direccion;
+    int posicion = 0;
+    //Recorrer cadena y agregar numeros a lista de string
+    while((posicion = cadena_temporal.find(delimitador))!= string::npos){
+        vector_temporal.push_back(cadena_temporal.substr(0, posicion));
+        cadena_temporal.erase(0, posicion + delimitador.length());
+    }
+    vector_temporal.push_back(cadena_temporal);    
+    return vector_temporal;
 }
 
 string PC::conversionBinario(int numero){
@@ -79,11 +114,17 @@ string PC::conversionBinario(int numero){
     for (int i = contador - 1; i >=0 ; i--){
         binario += std::to_string(arreglo_binario[i]);
     }
-    int contador_ceros = -7;
-    string cero = "0";
-    
+    while(binario.length() < 8){
+        binario.insert(0, "0");
+    }
     return binario;
+}
+string PC::unirBinarios(vector<string> lista_binarios){
+    string cadena_temporal;
+    for(int i = 0; i < lista_binarios.size(); i ++)
+        cadena_temporal += lista_binarios[i];
     
+    return cadena_temporal;
 }
 //Destructor
 PC::~PC(){}

@@ -17,6 +17,8 @@ class PC{
         string getMascara_Red();
         string getHost_Name();
         void ping(string);
+        vector<string> separarNumeros(string);
+        string unirBinarios(vector<string>);
         string conversionBinario(int);
         ~PC();
 
