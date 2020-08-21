@@ -3,9 +3,11 @@
 #include "PC.hpp"
 using namespace std;
 
+
+void imprimirPCs(vector<PC*>);
 int main(){
     //Crear vector
-    vector<PC*> lista_PC;
+    vector<PC*> lista_PCs;
     char seguir = 's';
     int opcion_usuario;
     while(seguir == 's'){
@@ -35,19 +37,23 @@ int main(){
             //Crear Objeto
             PC* nueva_pc = new PC(direccion_ip,mascara_red, host_name);
             //Agregar a lista de PCs
-            lista_PC.push_back(nueva_pc);
-            cout << "Se agrego exitosamente la PC\n";
+            lista_PCs.push_back(nueva_pc);
+            cout << "Se agrego exitosamente la PC!!!\n";
             break;
         }
         case 2:{
             //Opcion Ingresar a PC
-
-            //Seleccionar una PC
-            if(lista_PC.empty()){
+            //Verificar si existen Pcs
+            if(lista_PCs.empty()){
                 cout << "No existe ninguna PC\n";
             } else {
                 //Existe minimo 1 PC
-                
+                int opcion_pc;
+                cout << "Lista de PCs: " << endl;
+                imprimirPCs(lista_PCs);
+                cout << "Seleccione una PC: ";
+                cin >> opcion_pc;
+
             }
             break;
         }
@@ -64,4 +70,17 @@ int main(){
     }
 
     return 0;
+}
+
+
+void imprimirPCs(vector<PC*> lista_PCs){
+
+
+    for (int i = 0; i < lista_PCs.size(); i++){
+        PC* pc_temporal = lista_PCs.at(i);
+        cout << "PC [" << i << "] " << "Host Name: " << pc_temporal->getHost_Name() << ", Direccion IP: " << pc_temporal->getDireccion_IP() 
+        << ", Mascara de Red: " << pc_temporal->getMascara_Red() << endl;
+    }
+    cout << endl;
+    
 }
