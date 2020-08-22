@@ -19,6 +19,7 @@ class PC{
         void ping(string);
         vector<string> separarNumeros(string);
         string unirBinarios(vector<string>);
+        bool revisarExistencia(vector<PC*>);
         string conversionBinario(int);
         ~PC();
 

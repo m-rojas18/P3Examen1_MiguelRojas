@@ -14,8 +14,7 @@ string PC::getDireccion_IP(){return direccion_IP;}
 string PC::getHost_Name(){return host_name;}
 string PC::getMascara_Red(){return mascara_red;}
 
-
-void PC::ping(string ip_buscado){
+void PC::ping(string ip_buscado, vector<PC*> lista_pcs){
     //Conseguir valores de ip de pc ingresada
     vector<string> valores_direccion_ip = separarNumeros(direccion_IP);
     //Convertir valores de string obtenidos a int de direccion ip de usuario
@@ -81,10 +80,29 @@ void PC::ping(string ip_buscado){
 
     //Conseguir cadena de ip buscado con respecto a la cantidad de 1's
     string salida_binario_IP_buscado = unirBinarios(binarios_IP_buscado);
-    cout << salida_binario_IP_buscado << endl;
     string ip_comparacion_buscado = salida_binario_IP_buscado.substr(0, cantidad_uno);
-    cout<< ip_comparacion_buscado << endl;
-
+    //Compararar ip's y mostrar impresion
+    if(ip_comparacion_user != ip_comparacion_buscado){
+        //Inalcanzable, no son iguales
+        cout << "\nPinging to " << ip_buscado << " with 32 bytes of data: " << endl
+            << "Reply from " << ip_buscado << ": Destination host unreachable" << endl
+            << "Reply from " << ip_buscado << ": Destination host unreachable" << endl
+            << "Reply from " << ip_buscado << ": Destination host unreachable" << endl
+            << "Reply from " << ip_buscado << ": Destination host unreachable" << endl
+            << endl
+            << "Ping statistics for " << ip_buscado << ": " << endl
+            << "   Packets: Sent = 4, Recieved = 4, Lost = 0 (0% loss)" << endl << endl;
+    } else {
+        //Ping exitoso
+        cout << "\nPinging to " << ip_buscado << " with 32 bytes of data: " << endl
+            << "Reply from " << ip_buscado << ": bytes=32 time=37ms TTL=46" << endl
+            << "Reply from " << ip_buscado << ": bytes=32 time=37ms TTL=46" << endl
+            << "Reply from " << ip_buscado << ": bytes=32 time=37ms TTL=46" << endl
+            << "Reply from " << ip_buscado << ": bytes=32 time=37ms TTL=46" << endl
+            << endl
+            << "Ping statistics for " << ip_buscado << ": " << endl
+            << "   Packets: Sent = 4, Recieved = 4, Lost = 0 (0% loss)" << endl << endl;
+    }
 }
 
 vector<string> PC::separarNumeros(string direccion){
