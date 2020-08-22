@@ -59,7 +59,7 @@ int main(){
                 cout << "Seleccione una PC: ";
                 cin >> opcion_pc;
                 cout << endl;
-                while(opcion_pc > lista_PCs.size() || opcion_pc < 0){
+                while(opcion_pc >= lista_PCs.size() || opcion_pc < 0){
                     cout << "Ingrese una opcion invalida\n";
                     imprimirPCs(lista_PCs);
                     cout << "Seleccione una PC: ";
