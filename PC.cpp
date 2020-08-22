@@ -15,7 +15,6 @@ string PC::getHost_Name(){return host_name;}
 string PC::getMascara_Red(){return mascara_red;}
 
 void PC::ping(string ip_buscado, vector<PC*> lista_PCs){
-
     //Verificar si existe la computadora buscada
     bool verificar_pc = true;
     for (int i = 0; i < lista_PCs.size(); i++){
@@ -28,7 +27,8 @@ void PC::ping(string ip_buscado, vector<PC*> lista_PCs){
         } 
     }
 
-    if(verificar_pc == false){//Existe la pc buscada
+    if(verificar_pc == false){
+        //Existe la pc buscada
         //Conseguir valores de ip de pc ingresada
         vector<string> valores_direccion_ip = separarNumeros(direccion_IP);
         //Convertir valores de string obtenidos a int de direccion ip de usuario
@@ -37,6 +37,7 @@ void PC::ping(string ip_buscado, vector<PC*> lista_PCs){
             int entero_temporal = std::stoi(valores_direccion_ip[i]);
             numeros_direccionIP_usuario[i] = entero_temporal;
         }
+
         //Repetir proceso con la direccion ip buscada
         vector<string> valores_direccion_buscada =separarNumeros(ip_buscado);//Separar numeros
         //Convertir valores de string obtenidos a int de direccion de ip buscada
@@ -62,7 +63,7 @@ void PC::ping(string ip_buscado, vector<PC*> lista_PCs){
 
         //Separar numeros de mascara de red
         vector<string> valores_mascara_red = separarNumeros(mascara_red);
-        //Convertir valores de string a int
+        //Convertir valores de string a int de mascara de red
         int numeros_mascara_red[4];
         for(int i = 0; i < 4; i++){
             int numero_temporal = std::stoi(valores_mascara_red[i]);

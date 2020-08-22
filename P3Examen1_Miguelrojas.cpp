@@ -10,7 +10,9 @@ int main(){
     //Crear vector
     vector<PC*> lista_PCs;
     PC* pc_definida = new PC("192.168.3.58", "255.255.255.192", "Miguel");
+    PC* pc_definida2 = new PC("192.168.3.248","255.255.255.128", "Mikasa");
     lista_PCs.push_back(pc_definida);
+    lista_PCs.push_back(pc_definida2);
     char seguir = 's';
     int opcion_usuario;
     while(seguir == 's'){
@@ -83,7 +85,7 @@ int main(){
                     } else if(comando.substr(0,5) == "ping_"){
                         //Opcion Ping
                         string direccion_ip_buscada = comando.substr(5);
-                        pc_seleccionada->ping(direccion_ip_buscada);
+                        pc_seleccionada->ping(direccion_ip_buscada, lista_PCs);
                     }else if(comando == "exit"){
                         //El usuario puso el comando exit
                         seguir_terminal = false;  
