@@ -16,10 +16,9 @@ class PC{
         string getDireccion_IP();
         string getMascara_Red();
         string getHost_Name();
-        void ping(string);
+        void ping(string, vector<PC*>);
         vector<string> separarNumeros(string);
         string unirBinarios(vector<string>);
-        bool revisarExistencia(vector<PC*>);
         string conversionBinario(int);
         ~PC();
 
